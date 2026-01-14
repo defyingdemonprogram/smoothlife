@@ -19,6 +19,8 @@ float b2 = 0.365f;
 float d1 = 0.267f;
 float d2 = 0.445f;
 float dt = 0.05f;
+float M = 0.0f;
+float N = 0.0f;
 
 
 float rand_float(void) {
@@ -26,8 +28,8 @@ float rand_float(void) {
 }
 
 void random_grid(void) {
-    size_t w = WIDTH/3;
-    size_t h = HEIGHT/3;
+    size_t w = WIDTH/2;
+    size_t h = HEIGHT/2;
     for (size_t dy = 0; dy < h; ++dy) {
         for (size_t dx = 0; dx < w; ++dx) {
             size_t x = dx + WIDTH/2 - w/2;
@@ -80,21 +82,20 @@ void clamp(float *x, float l, float h) {
 void compute_grid_diff(void) {
     for (int cy = 0; cy < HEIGHT; ++cy) {
         for (int cx = 0; cx < WIDTH; ++cx) {
-            float m = 0.0f, M = 0.0f;
-            float n = 0.0f, N = 0.0f;
+            float m = 0.0f;
+            float n = 0.0f;
             float ri = ra / 3.0f;
 
-            for (int dy = -(int)(ra - 1); dy <= (int)(ra - 1); ++dy) {
-                for (int dx = -(int)(ra - 1); dx <= (int)(ra - 1); ++dx) {
+            int range = (int)ceil(ra);
+            for (int dy = -range; dy <= range; ++dy) {
+                for (int dx = -range; dx <= range; ++dx) {
                     int x = emod(cx + dx, WIDTH);
                     int y = emod(cy + dy, HEIGHT);
                     float dist_sq = (float)(dx * dx + dy * dy);
                     if (dist_sq <= ri * ri) {
                         m += grid[y][x];
-                        M += 1.0f;
                     } else if (dist_sq <= ra * ra) {
                         n += grid[y][x];
-                        N += 1.0f;
                     }
                 }
             }
@@ -117,8 +118,22 @@ void apply_grid_diff(void) {
 
 int main(void) {
     srand((unsigned int)time(NULL));
-    random_grid();
 
+    // Precompute normalization factors
+    float ri = ra / 3.0f;
+    int range = (int)ceil(ra);
+    for (int dy = -range; dy <= range; ++dy) {
+        for (int dx = -range; dx <= range; ++dx) {
+            float dist_sq = (float)(dx * dx + dy * dy);
+            if (dist_sq <= ri * ri) {
+                M += 1.0f;
+            } else if (dist_sq <= ra * ra) {
+                N += 1.0f;
+            }
+        }
+    }
+
+    random_grid();
     display_grid(grid);
 
     for (;;) {
