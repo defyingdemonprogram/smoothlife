@@ -9,20 +9,28 @@ This continuous model enables rich, organic patterns such as **gliders**, **brea
 
 ## Quick Start
 
-#### Build
+### Build the Project
 
 ```bash
 ./build.sh
 ```
 
-#### Run (Terminal Rendering)
+### Run in Terminal Mode
 
 ```bash
-./smoothlife_term
+./build/smoothlife_term
 ```
 
-> **Note:** If the program exits immediately, try running it again.
+> **Tip:** If the program exits immediately, simply run it again.
+
+### Run with GUI (Raylib)
+
+```bash
+./build/main
+```
 
 ## References
 
 * [Generalization of Conway's "Game of Life" to a continuous domain - SmoothLife (Paper)](https://arxiv.org/abs/1111.1567)
+* [raylib - GitHub](https://github.com/raysan5/raylib)
+* [SmoothLife - GitHub](https://github.com/defyingdemonprogram/smoothlife)
