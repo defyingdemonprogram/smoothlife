@@ -44,7 +44,7 @@ void init_smoothlife(SmoothLife *sl) {
     sl->b2 = 0.365f;
     sl->d1 = 0.267f;
     sl->d2 = 0.445f;
-    sl->dt = 0.05f;
+    sl->dt = 0.025f;
     sl->M = 0.0f;
     sl->N = 0.0f;
 
@@ -64,6 +64,12 @@ void init_smoothlife(SmoothLife *sl) {
     }
 
     // Initialize random grid
+    // Use a separate function so we can re-randomize later
+    extern void randomize_grid(SmoothLife *sl); // Forward declaration
+    randomize_grid(sl);
+}
+
+void randomize_grid(SmoothLife *sl) {
     size_t w = WIDTH / 2;
     size_t h = HEIGHT / 2;
     for (size_t y = 0; y < HEIGHT; ++y) {
@@ -162,8 +168,34 @@ int main(void) {
     while (!WindowShouldClose()) {
         if (IsKeyPressed(KEY_Q)) break;
 
-        compute_grid_diff(sl);
-        apply_grid_diff(sl);
+        // Reset grid on 'R' press
+        if (IsKeyPressed(KEY_R)) {
+            randomize_grid(sl);
+        }
+
+        // Draw with mouse
+        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+            Vector2 mousePos = GetMousePosition();
+            int cx = (int)(mousePos.x / CELL_SIZE);
+            int cy = (int)(mousePos.y / CELL_SIZE);
+            
+            // Draw a small circle of life
+            int radius = 1;
+            for (int dy = -radius; dy <= radius; dy++) {
+                for (int dx = -radius; dx <= radius; dx++) {
+                    int x = emod(cx + dx, WIDTH);
+                    int y = emod(cy + dy, HEIGHT);
+                    sl->grid[y][x] = 1.0f;
+                }
+            }
+        }
+
+        // Run physics with sub-stepping for stability
+        // 2 steps of 0.025 instead of 1 step of 0.05
+        for (int step = 0; step < 2; step++) {
+            compute_grid_diff(sl);
+            apply_grid_diff(sl);
+        }
 
         BeginDrawing();
         ClearBackground(BACKGROUND_COLOR);
