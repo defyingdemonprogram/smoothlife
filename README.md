@@ -28,6 +28,9 @@ This continuous model enables rich, organic patterns such as **gliders**, **brea
 ```bash
 ./build/smoothlife_gui
 ```
+- Quick keys: 
+    - `R` to reload the random grid to restart animation
+    - `Q` to quit the program
 
 ### Run with GPU(Raylib)
 
