@@ -26,16 +26,17 @@ This continuous model enables rich, organic patterns such as **gliders**, **brea
 ### Run with GUI (Raylib)
 
 ```bash
-./build/main
+./build/smoothlife_gui
 ```
 
 ### Run with GPU(Raylib)
 
 ```bash
-./build/smoothlife_with_shader
+# redner using with OpenGL shader
+./build/smoothlife_gpu
 ```
 
-### Demo (with Raylib)
+### Demo (with Raylib GUI)
 
 
 https://github.com/user-attachments/assets/65e0de20-58f0-481b-90e0-9c507fd312f7
