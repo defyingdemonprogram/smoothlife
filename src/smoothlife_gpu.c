@@ -41,13 +41,14 @@ int main(void) {
     SetTextureFilter(state[1].texture, TEXTURE_FILTER_BILINEAR);
     UpdateTexture(state[1].texture, image.data);    
 
-    Shader shader = LoadShader(NULL, "./smoothlife.fs");
+    Shader shader = LoadShader(NULL, "./src/smoothlife.fs");
     Vector2 resolution = { TEXTURE_WIDTH, TEXTURE_HEIGHT };
     int resolution_loc = GetShaderLocation(shader, "resolution");
     SetShaderValue(shader, resolution_loc, &resolution, SHADER_UNIFORM_VEC2);
 
     size_t i = 0;
     while (!WindowShouldClose()) {
+        if (IsKeyPressed(KEY_Q)) break;
         BeginTextureMode(state[1 - i]);
             ClearBackground(BACKGROUND_COLOR);
             BeginShaderMode(shader);
