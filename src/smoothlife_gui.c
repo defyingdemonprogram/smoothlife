@@ -70,8 +70,8 @@ void init_smoothlife(SmoothLife *sl) {
 }
 
 void randomize_grid(SmoothLife *sl) {
-    size_t w = WIDTH / 2;
-    size_t h = HEIGHT / 2;
+    size_t w = WIDTH / 3;
+    size_t h = HEIGHT / 3;
     for (size_t y = 0; y < HEIGHT; ++y) {
         for (size_t x = 0; x < WIDTH; ++x) {
             sl->grid[y][x] = 0.0f;

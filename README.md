@@ -29,6 +29,12 @@ This continuous model enables rich, organic patterns such as **gliders**, **brea
 ./build/main
 ```
 
+### Run with GPU(Raylib)
+
+```bash
+./build/smoothlife_with_shader
+```
+
 ### Demo (with Raylib)
 
 
