@@ -29,6 +29,13 @@ This continuous model enables rich, organic patterns such as **gliders**, **brea
 ./build/main
 ```
 
+### Demo (with Raylib)
+
+
+https://github.com/user-attachments/assets/65e0de20-58f0-481b-90e0-9c507fd312f7
+
+
+
 ## References
 
 * [Generalization of Conway's "Game of Life" to a continuous domain - SmoothLife (Paper)](https://arxiv.org/abs/1111.1567)
